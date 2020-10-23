@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Command {
-
     public HttpStatus result;
     public Date date = new Date();
 
@@ -20,7 +19,6 @@ public class Command {
         this.requestIP = request.getRemoteAddr();
         this.requestPath = request.getRequestURI();
         this.requestMethod = request.getMethod();
-
     }
 
     public void setResult(HttpStatus result){
@@ -42,7 +40,5 @@ public class Command {
         strBuilder.append(String.format("%1$-20s", result));
 
         return strBuilder.toString();
-
     }
-
 }

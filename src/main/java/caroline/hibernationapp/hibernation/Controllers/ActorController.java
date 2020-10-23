@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import caroline.hibernationapp.hibernation.Models.CommonResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.util.Optional;
 
 @RestController
 public class ActorController {
@@ -18,21 +18,16 @@ public class ActorController {
     @Autowired
     private ActorRepository repository;
 
-
     @GetMapping("/")
     public ResponseEntity<CommonResponse> actorRoot(HttpServletRequest request) {
         Command command = new Command(request);
-
         CommonResponse commonResponse = new CommonResponse();
         commonResponse.data = null;
         commonResponse.message = "Not implemented";
-
         HttpStatus response = HttpStatus.NOT_IMPLEMENTED;
-
         command.setResult(response);
         return new ResponseEntity<>(commonResponse, response);
     }
-
 
     @PostMapping("/actor/")
     public ResponseEntity<CommonResponse> createNewActor(HttpServletRequest request, HttpServletResponse resp, @RequestBody Actor actor) {
@@ -50,7 +45,6 @@ public class ActorController {
         return new ResponseEntity<>(commonResponse, response);
     }
 
-
     @GetMapping("/actor/all")
     public ResponseEntity<CommonResponse> listAllActors(HttpServletRequest request) {
         Command command = new Command(request);
@@ -64,7 +58,6 @@ public class ActorController {
 
         return new ResponseEntity<>(commonResponse, response);
     }
-
 
     @GetMapping("/actor/{id}")
     public ResponseEntity<CommonResponse> getActorById(HttpServletRequest request, @PathVariable("id") Integer id) {
@@ -87,7 +80,6 @@ public class ActorController {
         return new ResponseEntity<>(commonResponse, response);
     }
 
-
     @DeleteMapping("actor/{id}")
     public ResponseEntity<CommonResponse> deleteActor(HttpServletRequest request, @PathVariable Integer id){
         Command command = new Command(request);
@@ -103,9 +95,40 @@ public class ActorController {
             commonResponse.message = "Actor with id: " + id + " was not found";
             resp = HttpStatus.NOT_FOUND;
         }
-
         command.setResult(resp);
         return new ResponseEntity<>(commonResponse, resp);
     }
 
+    @PatchMapping("/actor/{id}")
+    public ResponseEntity<CommonResponse> updateActor(HttpServletRequest req, @RequestBody Actor newActor, @PathVariable Integer id) {
+        Command command = new Command(req);
+        CommonResponse commonResponse = new CommonResponse();
+        HttpStatus resp;
+
+        if (repository.existsById(id)) {
+            Optional<Actor> actorRepository  = repository.findById(id);
+            Actor actor = actorRepository.get();
+
+            if (newActor.getFirstName() != null) {
+                actor.setFirstName(newActor.getFirstName());
+            }
+            if (newActor.getLastName() != null) {
+                actor.setLastName(newActor.getLastName());
+            }
+            if (newActor.getBirthDate() != null) {
+                actor.setBirthDate(newActor.getBirthDate());
+            }
+
+            repository.save(actor);
+
+            commonResponse.data = actor;
+            commonResponse.message = "Actor with id: " + actor.getId() + " has been updated";
+            resp = HttpStatus.OK;
+        } else {
+            commonResponse.message = "Couldn't find actor with id: " + id;
+            resp = HttpStatus.NOT_FOUND;
+        }
+        command.setResult(resp);
+        return new ResponseEntity<>(commonResponse, resp);
+    }
 }
