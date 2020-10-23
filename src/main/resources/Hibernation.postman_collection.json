@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "f5437018-c1d5-4c2f-a96d-925075b31a65",
+		"name": "Hibernation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add new actor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"James\",\r\n    \"lastName\": \"Franco\",\r\n    \"birthDate\": \"1978-04-19\",\r\n    \"urlIMDB\": \"https://www.imdb.com/name/nm0290556/?ref_=nv_sr_srsg_0\"\r\n} \r\n\r\n\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/actor/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actor",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all actors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actor/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actor",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific actor by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actor/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actor",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete actor by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actor/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actor",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update actor",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"firstName\": \"nu är du ändrad igen!!!!\",\r\n            \"lastName\": \"förhoppningsvis\",\r\n            \"birthDate\": \"1970-02-17\",\r\n            \"urlIMDB\": \"https://www.imdb.com/name/nm0700712/?ref_=tt_ov_st_sm\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/actor/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actor",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
